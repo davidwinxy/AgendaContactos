@@ -16,11 +16,14 @@ namespace Agenda.Controllers
         // GET: ContactosController
         public async Task<IActionResult> Index(int? page)
         {
+            var userIdClaim = User.FindFirstValue("UsuarioId");
+
 
             int pageSize = 10;
             int pageNumber = page ?? 1;
 
             var contactos = await contexto.Contactos
+                .Where(c => c.UsuarioId == Convert.ToInt32(userIdClaim))
                 .OrderByDescending(d => d.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -47,8 +50,7 @@ namespace Agenda.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(contacto contactos)
         {
-            if (ModelState.IsValid)
-            {
+           
                 // Asignar automáticamente el Id del usuario actual
                 var userIdClaim = User.FindFirstValue("UsuarioId");
                 if (int.TryParse(userIdClaim, out int userId))
@@ -64,12 +66,10 @@ namespace Agenda.Controllers
                     ModelState.AddModelError(string.Empty, "Invalid user ID.");
                     return View(contactos);
                 }
-            }
-            else
-            {
-                return View(contactos);
-            }
         }
+            
+            
+        
 
         /*
           [HttpPost]
