@@ -29,7 +29,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usurio" asp-action="Logout">salir</a>
+                            <form method="post" asp-controller="Usuario" asp-action="Logout">
+                                <button type="submit" class="nav-link text-dark" style="background: none; border: none; padding: 0; cursor: pointer;">Salir</button>
+                            </form>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -44,6 +46,11 @@
             @RenderBody()
         </main>
     </div>
+     
+    <!-- Scripts necesarios para Bootstrap u otros frameworks CSS/JS -->
+    <!-- Asegúrate de incluir los scripts necesarios aquí -->
+
+
 
    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

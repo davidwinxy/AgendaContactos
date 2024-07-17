@@ -50,12 +50,11 @@ public class UsuarioController : Controller
         ViewData["LoginError"] = "Usuario o contraseña incorrectos";
         return View();
     }
-
     [HttpPost]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Login");
+        return RedirectToAction("Login", "Usuario");
     }
 
     [HttpGet]
