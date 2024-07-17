@@ -146,20 +146,53 @@ namespace Agenda.Controllers
         }
 
         // GET: ContactosController/Delete/5
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var userIdClaim = User.FindFirstValue("UsuarioId");
+            var contactos = await contexto.Contactos
+                .FirstOrDefaultAsync(c => c.Id == id && c.UsuarioId == Convert.ToInt32(userIdClaim));
+
+            if (contactos == null)
+            {
+                return NotFound();
+            }
+
+            return View(contactos);
         }
 
-        [HttpPost]
+        // POST: ContactosController/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, contacto contacto)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contactos = await contexto.Contactos.FindAsync(id);
+            var userIdClaim = User.FindFirstValue("UsuarioId");
+            var contacto = await contexto.Contactos
+                .FirstOrDefaultAsync(c => c.Id == id && c.UsuarioId == Convert.ToInt32(userIdClaim));
+
+            if (contacto == null)
+            {
+                return NotFound();
+            }
+
             contexto.Contactos.Remove(contacto);
             await contexto.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
+        /* public IActionResult Delete(int id)
+         {
+             return View();
+         }
+
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public async Task<IActionResult> Delete(int id, contacto contacto)
+         {
+             var contactos = await contexto.Contactos.FindAsync(id);
+             contexto.Contactos.Remove(contacto);
+             await contexto.SaveChangesAsync();
+
+             return RedirectToAction("Index");
+         }*/
     }
 }
