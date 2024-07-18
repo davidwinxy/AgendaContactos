@@ -1,51 +1,43 @@
 ﻿@model IEnumerable<Agenda.Models.contacto>
-
 @{
     ViewData["Title"] = "Index";
+    string searchString = ViewData["CurrentFilter"] as string;
 }
+<br />
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    @foreach (var item in Model)
+    {
+        <div class="col mb-4">
+            <a href="@Url.Action("Details", "Contactos", new { id = item.Id })" style="text-decoration: none; color: inherit;">
+                <div class="card h-100">
+                    @if (item.ImagenPerfil != null)
+                    {
+                        <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagenPerfil)" class="card-img-top card-img" alt="Perfil" style="height: 200px;" />
+                    }
+                    else
+                    {
+                        <div class="card-img-top card-img bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span>@item.Nombre.Substring(0, 1).ToUpper()</span>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        <hr class="separador" />
+                        <p class="card-text">@item.Telefono</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    
+</div>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.categoria)
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.categoria)
-            </td>
-           
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id}) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+
+
+
+
+   
+

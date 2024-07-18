@@ -4,41 +4,61 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="card shadow">
+    <div class="card-body">
+        <h4>Contacto</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Edit">
+                    <input asp-for="Id" type="hidden" />
+                    <input asp-for="UsuarioId" type="hidden" />
 
-<h4>contacto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="UsuarioId" type="hidden"  />
+                    <div class="form-group">
+                        <!-- Mostrar la imagen de perfil -->
+                        @if (Model.ImagenPerfil != null && Model.ImagenPerfil.Length > 0)
+                        {
+                            string imageBase64 = Convert.ToBase64String(Model.ImagenPerfil);
+                            string imageUrl = $"data:image/png;base64,{imageBase64}";
+                            <img src="@imageUrl" class="img-thumbnail" style="max-width: 200px;" />
+                        }
+                        else
+                        {
+                            <p>No hay imagen de perfil disponible.</p>
+                        }
+                    </div>
+                    <input asp-for="ImagenPerfil" class="form-control" type="hidden" />
 
-            
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Nombre" class="control-label">Nombre</label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Telefono" class="control-label">Teléfono</label>
+                        <input asp-for="Telefono" class="form-control" />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="categoria" class="control-label">Categoría</label>
+                        <input asp-for="categoria" class="form-control" />
+                        <span asp-validation-for="categoria" class="text-danger"></span>
+                    </div>
+                   
+
+
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="categoria" class="control-label"></label>
-                <input asp-for="categoria" class="form-control" />
-                <span asp-validation-for="categoria" class="text-danger"></span>
-            </div>
-           
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

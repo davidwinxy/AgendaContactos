@@ -18,8 +18,12 @@ namespace Agenda.Models
         [Required]
         public string categoria { get; set; }
 
+        public byte[] ImagenPerfil { get; set; }
+
         [Required]
         public int UsuarioId { get; set; }
+
+
 
         public usuario usuario { get; set; }
     }
