@@ -8,33 +8,50 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
+    <!-- Contenedor principal para los detalles del contacto -->
     <h4>contacto</h4>
+    <!-- Título de la sección -->
     <hr />
+    <!-- Separador horizontal -->
     <dl class="row">
-        
-        <dt class = "col-sm-2">
+        <!-- Lista de definición en formato de filas -->
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
-        <dd class = "col-sm-10">
+        <!-- Término del detalle para el nombre con un ancho de columna de 2 -->
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <!-- Definición del detalle que muestra el nombre del contacto con un ancho de columna de 10 -->
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Telefono)
         </dt>
-        <dd class = "col-sm-10">
+        <!-- Término del detalle para el teléfono con un ancho de columna de 2 -->
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Telefono)
         </dd>
-        <dt class = "col-sm-2">
+        <!-- Definición del detalle que muestra el teléfono del contacto con un ancho de columna de 10 -->
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.categoria)
         </dt>
-        <dd class = "col-sm-10">
+        <!-- Término del detalle para la categoría con un ancho de columna de 2 -->
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.categoria)
         </dd>
-        
+        <!-- Definición del detalle que muestra la categoría del contacto con un ancho de columna de 10 -->
+
     </dl>
-    
+
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <!-- Formulario para eliminar el contacto -->
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <!-- Botón de eliminar con la clase de Bootstrap para un estilo de botón rojo -->
+        |
+        <!-- Separador visual -->
         <a asp-action="Index">Back to List</a>
+        <!-- Enlace para volver a la lista de contactos -->
     </form>
 </div>

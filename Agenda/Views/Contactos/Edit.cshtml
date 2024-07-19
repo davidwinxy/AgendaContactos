@@ -6,11 +6,14 @@
 
 <div class="card shadow">
     <div class="card-body">
+        <!-- Título del formulario -->
         <h4>Contacto</h4>
         <hr />
         <div class="row">
             <div class="col-md-6">
+                <!-- Formulario para editar un contacto -->
                 <form asp-action="Edit">
+                    <!-- Campos ocultos para el Id y UsuarioId -->
                     <input asp-for="Id" type="hidden" />
                     <input asp-for="UsuarioId" type="hidden" />
 
@@ -20,38 +23,43 @@
                         {
                             string imageBase64 = Convert.ToBase64String(Model.ImagenPerfil);
                             string imageUrl = $"data:image/png;base64,{imageBase64}";
+                            <!-- Imagen de perfil en formato base64 -->
                             <img src="@imageUrl" class="img-thumbnail" style="max-width: 200px;" />
                         }
                         else
                         {
+                            <!-- Mensaje si no hay imagen de perfil -->
                             <p>No hay imagen de perfil disponible.</p>
                         }
                     </div>
+                    <!-- Campo oculto para la imagen de perfil -->
                     <input asp-for="ImagenPerfil" class="form-control" type="hidden" />
 
-
+                    <!-- Mostrar validaciones del modelo -->
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                    <!-- Campo para el nombre del contacto -->
                     <div class="form-group">
                         <label asp-for="Nombre" class="control-label">Nombre</label>
                         <input asp-for="Nombre" class="form-control" />
                         <span asp-validation-for="Nombre" class="text-danger"></span>
                     </div>
 
+                    <!-- Campo para el teléfono del contacto -->
                     <div class="form-group">
                         <label asp-for="Telefono" class="control-label">Teléfono</label>
                         <input asp-for="Telefono" class="form-control" />
                         <span asp-validation-for="Telefono" class="text-danger"></span>
                     </div>
 
+                    <!-- Campo para la categoría del contacto -->
                     <div class="form-group">
                         <label asp-for="categoria" class="control-label">Categoría</label>
                         <input asp-for="categoria" class="form-control" />
                         <span asp-validation-for="categoria" class="text-danger"></span>
                     </div>
-                   
 
-
+                    <!-- Botones de acción -->
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
                         <a asp-action="Index" class="btn btn-secondary">Back to List</a>

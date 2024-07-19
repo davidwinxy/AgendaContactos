@@ -4,34 +4,58 @@
     ViewData["Title"] = "Create";
 }
 
+<!-- Título principal de la página -->
 <h1>Create</h1>
 
+<!-- Título de la sección para crear un contacto -->
 <h4>contacto</h4>
+<!-- Separador horizontal -->
 <hr />
+
 <div class="row">
+    <!-- Contenedor para centrar el formulario en la página -->
     <div class="col-md-4">
+        <!-- Formulario para crear un nuevo contacto, enviando la solicitud POST a la acción "Create" -->
         <form asp-action="Create">
+            <!-- Sección para mostrar mensajes de validación resumidos -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
+            <!-- Campo de entrada para el nombre del contacto -->
             <div class="form-group">
+                <!-- Etiqueta para el campo de nombre -->
                 <label asp-for="Nombre" class="control-label"></label>
+                <!-- Entrada de texto para el nombre -->
                 <input asp-for="Nombre" class="form-control" />
+                <!-- Mensaje de validación para el campo de nombre -->
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
+
+            <!-- Campo de entrada para el teléfono del contacto -->
             <div class="form-group">
+                <!-- Etiqueta para el campo de teléfono -->
                 <label asp-for="Telefono" class="control-label"></label>
+                <!-- Entrada de texto para el teléfono -->
                 <input asp-for="Telefono" class="form-control" />
+                <!-- Mensaje de validación para el campo de teléfono -->
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
+
+            <!-- Campo de selección para la categoría del contacto -->
             <div class="form-group">
+                <!-- Etiqueta para el campo de categoría -->
                 <label asp-for="categoria" class="control-label"></label>
+                <!-- Menú desplegable para seleccionar la categoría -->
                 <select asp-for="categoria" class="form-control">
+                    <!-- Opción para categoría personal -->
                     <option value="Personal">Personal</option>
+                    <!-- Opción para categoría empresarial -->
                     <option value="Empresarial">Empresarial</option>
                 </select>
+                <!-- Mensaje de validación para el campo de categoría -->
                 <span asp-validation-for="categoria" class="text-danger"></span>
             </div>
-           
+
+            <!-- Botón para enviar el formulario y crear el contacto -->
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -39,7 +63,9 @@
     </div>
 </div>
 
+<!-- Enlace para volver a la lista de contactos -->
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 

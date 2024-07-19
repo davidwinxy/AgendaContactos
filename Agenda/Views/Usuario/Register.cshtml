@@ -11,30 +11,29 @@
         <div class="col-xl-10 col-lg-12 col-md-9">
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
+                    <!-- Fila anidada dentro del cuerpo de la tarjeta -->
                     <div class="row">
-                        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> <!-- Imagen de registro -->
                         <div class="col-lg-7">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Crear cuenta nueva</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Crear cuenta nueva</h1> <!-- Título de la sección -->
                                 </div>
                                 <form class="user" asp-action="Register" method="post">
                                     <div class="form-group">
                                         <input asp-for="Username" class="form-control form-control-user" id="exampleInputUsername" placeholder="Usuario">
-                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                        <span asp-validation-for="Username" class="text-danger"></span> <!-- Validación de Username -->
                                     </div>
                                     <div class="form-group">
                                         <input asp-for="Password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña" type="password">
-                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                        <span asp-validation-for="Password" class="text-danger"></span> <!-- Validación de Password -->
                                     </div>
-                                   
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">Crear cuenta</button>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">Crear cuenta</button> <!-- Botón de enviar -->
                                 </form>
                                 <hr>
                                 <button type="button" class="btn btn-google btn-user btn-block" onclick="window.location.href = '@Url.Action("Login", "Usuario")'">
                                     ya tienes una cuenta? ir a inicio
-                                </button>
+                                </button> <!-- Botón de redirección al login -->
                             </div>
                         </div>
                     </div>
@@ -45,7 +44,10 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    } <!-- Scripts de validación -->
 }
+
 
 
