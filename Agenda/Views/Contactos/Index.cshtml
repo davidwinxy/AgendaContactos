@@ -7,36 +7,30 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
     @foreach (var item in Model)
     {
-        <!-- Columna para cada item del modelo -->
         <div class="col mb-4">
-            <!-- Enlace a la acción Details del controlador Contactos -->
             <a href="@Url.Action("Details", "Contactos", new { id = item.Id })" style="text-decoration: none; color: inherit;">
                 <div class="card h-100">
-                    <!-- Mostrar imagen de perfil si está disponible -->
                     @if (item.ImagenPerfil != null)
                     {
                         <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagenPerfil)" class="card-img-top card-img" alt="Perfil" style="height: 200px;" />
                     }
                     else
                     {
-                        <!-- Mostrar un fondo con la primera letra del nombre si no hay imagen -->
                         <div class="card-img-top card-img bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
                             <span>@item.Nombre.Substring(0, 1).ToUpper()</span>
                         </div>
                     }
                     <div class="card-body">
-                        <!-- Título de la tarjeta con el nombre del contacto -->
                         <h5 class="card-title">@item.Nombre</h5>
                         <hr class="separador" />
-                        <!-- Texto de la tarjeta con el teléfono del contacto -->
                         <p class="card-text">@item.Telefono</p>
                     </div>
                 </div>
             </a>
         </div>
     }
+    
 </div>
-
 
 
 

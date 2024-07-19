@@ -15,91 +15,74 @@ namespace Agenda.Controllers
     public class ContactosController : Controller
     {
         private readonly contextoDb contexto;
-
-        // Constructor que inyecta el contexto de la base de datos
         public ContactosController(contextoDb contexto)
         {
             this.contexto = contexto;
         }
-
-        // Acción para mostrar la lista de contactos (GET)
+        // GET: ContactosController
         public async Task<IActionResult> Index(string searchString)
         {
-            // Obtener el ID del usuario desde las reclamaciones de la autenticación
             var userIdClaim = User.FindFirstValue("UsuarioId");
             if (!int.TryParse(userIdClaim, out int userId))
             {
                 return Unauthorized();
             }
 
-            // Consultar los contactos del usuario
             var contactosQuery = contexto.Contactos
                 .Where(c => c.UsuarioId == userId);
 
-            // Aplicar filtro de búsqueda si se proporciona un término de búsqueda
-            if (!string.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(searchString))
             {
                 contactosQuery = contactosQuery.Where(s => s.Nombre.Contains(searchString));
             }
 
-            // Obtener la lista de contactos ordenada por ID en orden descendente
             var contactos = await contactosQuery
                 .OrderByDescending(d => d.Id)
                 .ToListAsync();
 
             return View(contactos);
         }
-
-        // Acción para mostrar los detalles de un contacto específico (GET)
+        // GET: ContactosController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var contacto = await contexto.Contactos.SingleOrDefaultAsync(d => d.Id == id);
-            if (contacto == null)
-            {
-                return NotFound();
-            }
+            var contactos = await contexto.Contactos.SingleOrDefaultAsync(d => d.Id == id);
 
-            return View(contacto);
+            return View(contactos);
         }
 
-        // Acción para mostrar la vista de creación de un nuevo contacto (GET)
+        // GET: ContactosController/Create
         public IActionResult Create()
         {
             return View();
         }
-
-        // Acción para manejar la creación de un nuevo contacto (POST)
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(contacto contacto)
+        public async Task<IActionResult> Create(contacto contactos)
         {
-            if (ModelState.IsValid)
-            {
-                // Asignar automáticamente el ID del usuario actual al nuevo contacto
+           
+                // Asignar automáticamente el Id del usuario actual
                 var userIdClaim = User.FindFirstValue("UsuarioId");
                 if (int.TryParse(userIdClaim, out int userId))
                 {
-                    contacto.UsuarioId = userId;
+                    contactos.UsuarioId = userId;
 
-                    // Generar una imagen de perfil para el contacto
-                    contacto.ImagenPerfil = GenerarImagenPerfil(contacto.Nombre);
+                    contactos.ImagenPerfil = GenerarImagenPerfil(contactos.Nombre);
 
-                    // Agregar el nuevo contacto a la base de datos y guardar los cambios
-                    contexto.Contactos.Add(contacto);
+
+                    contexto.Contactos.Add(contactos);
                     await contexto.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid user ID.");
-                    return View(contacto);
+                    return View(contactos);
                 }
-            }
-
-            return View(contacto);
         }
 
-        // Método para generar una imagen de perfil para un contacto
+
+
         private byte[] GenerarImagenPerfil(string nombre)
         {
             int width = 1000;
@@ -107,6 +90,7 @@ namespace Agenda.Controllers
             string letra = nombre.Substring(0, 1).ToUpper();
 
             var font = SystemFonts.CreateFont("Times New Roman", 500, FontStyle.Bold);
+
             Random rnd = new Random();
             var colorAleatorio = Color.FromRgb((byte)rnd.Next(256), (byte)rnd.Next(256), (byte)rnd.Next(256));
 
@@ -115,6 +99,7 @@ namespace Agenda.Controllers
                 image.Mutate(ctx =>
                 {
                     ctx.Fill(colorAleatorio);
+
                     ctx.DrawText(letra, font, Color.White, new PointF(300, 250));
                 });
 
@@ -126,36 +111,37 @@ namespace Agenda.Controllers
             }
         }
 
-        // Acción para mostrar la vista de edición de un contacto específico (GET)
+
+
+
+        // GET: ContactosController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var contacto = await contexto.Contactos.FindAsync(id);
-            if (contacto == null)
+            var contactos = await contexto.Contactos.FindAsync(id);
+            if (contactos == null)
             {
                 return NotFound();
             }
-
-            return View(contacto);
+            return View(contactos);
         }
 
-        // Acción para manejar la edición de un contacto específico (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, contacto contacto, byte[] ImagenPerfil)
+        public async Task<IActionResult> Edit(int id, contacto contactos, byte[] ImagenPerfil)
         {
             var userIdClaim = User.FindFirstValue("UsuarioId");
-
-            if (id != contacto.Id)
+          
+   
+                if (id != contactos.Id)
             {
                 return BadRequest();
             }
 
-            if (ModelState.IsValid)
-            {
+           
                 try
                 {
-                    contacto.ImagenPerfil = ImagenPerfil;
-                    contexto.Update(contacto);
+                    contactos.ImagenPerfil = ImagenPerfil;
+                    contexto.Update(contactos);
                     await contexto.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -170,27 +156,25 @@ namespace Agenda.Controllers
                         throw;
                     }
                 }
-            }
-
-            return View(contacto);
+           
         }
 
-        // Acción para mostrar la vista de eliminación de un contacto específico (GET)
+        // GET: ContactosController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var userIdClaim = User.FindFirstValue("UsuarioId");
-            var contacto = await contexto.Contactos
+            var contactos = await contexto.Contactos
                 .FirstOrDefaultAsync(c => c.Id == id && c.UsuarioId == Convert.ToInt32(userIdClaim));
 
-            if (contacto == null)
+            if (contactos == null)
             {
                 return NotFound();
             }
 
-            return View(contacto);
+            return View(contactos);
         }
 
-        // Acción para manejar la eliminación de un contacto específico (POST)
+        // POST: ContactosController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -209,5 +193,20 @@ namespace Agenda.Controllers
 
             return RedirectToAction("Index");
         }
+        /* public IActionResult Delete(int id)
+         {
+             return View();
+         }
+
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public async Task<IActionResult> Delete(int id, contacto contacto)
+         {
+             var contactos = await contexto.Contactos.FindAsync(id);
+             contexto.Contactos.Remove(contacto);
+             await contexto.SaveChangesAsync();
+
+             return RedirectToAction("Index");
+         }*/
     }
 }
